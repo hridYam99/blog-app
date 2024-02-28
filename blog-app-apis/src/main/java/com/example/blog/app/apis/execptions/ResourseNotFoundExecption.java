@@ -8,8 +8,8 @@ public class ResourseNotFoundExecption extends RuntimeException{
 
     public ResourseNotFoundExecption(String resourceName, String fieldName, Integer fieldVal) {
         super(String.format("%s not found with %s : %d", resourceName, fieldName, fieldVal));
-        this.resourceName = resourceName;
-        this.fieldName = fieldName;
-        this.fieldVal = fieldVal;
+//        this.resourceName = resourceName;
+//        this.fieldName = fieldName;
+//        this.fieldVal = fieldVal;
     }
 }

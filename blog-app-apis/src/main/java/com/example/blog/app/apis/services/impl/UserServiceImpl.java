@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -30,20 +31,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto updateUser(UserDto userDto, Integer id) throws ResourseNotFoundExecption {
+    public UserDto updateUser(UserDto userDto, Integer id) {
 
 //        video 10 / used my technique
-        User user = null;
-        try {
-            user = userRepo.getReferenceById(id);
-        } catch (ResourseNotFoundExecption e) {
-            throw new ResourseNotFoundExecption("user", "Id", id);
-        }
+        User user =  userRepo.findById(id)
+                .orElseThrow(()-> new ResourseNotFoundExecption("user","id",id));
 
-        user.setName(user.getName());
-        user.setPassword(user.getPassword());
-        user.setEmail(user.getEmail());
-        user.setAbout(user.getAbout());
+        user.setName(userDto.getName());
+        user.setPassword(userDto.getPassword());
+        user.setEmail(userDto.getEmail());
+        user.setAbout(userDto.getAbout());
 
         User savedUser = userRepo.save(user);
 
@@ -52,12 +49,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getUserById(Integer id) {
-        User user = null;
-        try {
-            user = userRepo.getReferenceById(id);
-        } catch (ResourseNotFoundExecption e) {
-            throw new ResourseNotFoundExecption("user", "Id", id);
-        }
+        User user = userRepo.findById(id)
+                .orElseThrow(()-> new ResourseNotFoundExecption("user","id",id));
 
         return userToDto(user);
     }
@@ -74,12 +67,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(Integer id) {
-        User user = null;
-        try {
-            user = userRepo.getReferenceById(id);
-        } catch (ResourseNotFoundExecption e) {
-            throw new ResourseNotFoundExecption("user", "Id", id);
-        }
+        User user = userRepo.findById(id)
+                .orElseThrow(()-> new ResourseNotFoundExecption("user","id",id));
 
         userRepo.delete(user);
     }
