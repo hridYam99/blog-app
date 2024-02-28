@@ -9,6 +9,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CategoryDto {
     private Integer id;
-    private String CategoryTitle;
-    private String CategoryDesc;
+    private String categoryTitle;
+    private String categoryDesc;
 }
