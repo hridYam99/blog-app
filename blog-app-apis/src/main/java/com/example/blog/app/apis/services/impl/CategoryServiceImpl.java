@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,29 +24,49 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDto createCategory(CategoryDto categoryDto) {
-        categoryRepo.save(modelMapper.map(categoryDto, Category.class));
+        categoryRepo.save(categoryDtotoCategory(categoryDto));
         return null;
     }
 
     @Override
     public CategoryDto updateCategory(CategoryDto categoryDto, Integer id) {
         Category category = categoryRepo.findById(id)
-                .orElseThrow(()-> new ResourseNotFoundExecption("Category", ""));
-        return null;
+                .orElseThrow(()-> new ResourseNotFoundExecption("Category", "id",id));
+        category.setCategoryDesc(categoryDto.getCategoryDesc());
+        category.setCategoryTitle(categoryDto.getCategoryTitle());
+        Category savedCategory = categoryRepo.save(category);
+        return categorytoCategoryDto(savedCategory);
     }
 
     @Override
     public CategoryDto getCategory(Integer id) {
-        return null;
+        Category category = categoryRepo.findById(id)
+                .orElseThrow(()-> new ResourseNotFoundExecption("Category", "id", id));
+        return categorytoCategoryDto(category);
     }
 
     @Override
     public List<CategoryDto> getAllCategory() {
-        return null;
+        List<Category> allCategory = categoryRepo.findAll();
+        List<CategoryDto> allCategoryDto = new ArrayList<>();
+        for(Category i:allCategory){
+            allCategoryDto.add(categorytoCategoryDto(i));
+        }
+        return allCategoryDto;
     }
 
     @Override
     public void deleteCategory(Integer id) {
+        Category category = categoryRepo.findById(id)
+                .orElseThrow(()-> new ResourseNotFoundExecption("Category", "id", id));
+        categoryRepo.delete(category);
+    }
 
+    Category categoryDtotoCategory(CategoryDto categoryDto){
+        return modelMapper.map(categoryDto,Category.class);
+    }
+
+    CategoryDto categorytoCategoryDto(Category category){
+        return modelMapper.map(category,CategoryDto.class);
     }
 }
