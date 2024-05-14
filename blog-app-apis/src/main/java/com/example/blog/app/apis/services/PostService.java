@@ -1,6 +1,7 @@
 package com.example.blog.app.apis.services;
 
 import com.example.blog.app.apis.payloads.PostDto;
+import com.example.blog.app.apis.payloads.PostResponse;
 import com.example.blog.app.apis.repositories.PostRepo;
 
 import java.util.List;
@@ -9,17 +10,17 @@ public interface PostService {
 //    GET POST BY ID
     PostDto getPost(Integer id);
 //    GET POST BY USER
-    PostDto getPostByUser(Integer id);
+    List<PostDto> getPostByUser(Integer id);
 //    GET POST BY CATEGORY
-    PostDto getPostByCategoty(Integer id);
+    List<PostDto> getPostByCategoty(Integer id);
 //    SEARCH POST BY KEYWORD
-    PostDto searchPost(String keyword);
+//    List<PostDto> searchPost(String keyword);
 //    GET ALL
-    List<PostDto> getAllPost();
+    PostResponse getAllPost(Integer pageNumber , Integer pageSize, String sortBy);
 //    DELETE
-    void deletePost();
+    void deletePost(Integer postId);
 //    CREATE
-    PostDto createPost(PostDto postDto);
+    PostDto createPost(PostDto postDto, Integer userId, Integer categoryId);
 //    UPDATE
-    PostDto updatePost(PostDto postDto);
+    PostDto updatePost(Integer postId, PostDto postDto);
 }
