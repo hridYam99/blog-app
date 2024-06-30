@@ -17,7 +17,6 @@ public class SecurityConfig {
     private JwtAuthenticationEntryPoint point;
     @Autowired
     private JWTAuthenticationFilter filter;
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 

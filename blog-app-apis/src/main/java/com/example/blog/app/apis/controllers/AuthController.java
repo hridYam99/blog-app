@@ -24,7 +24,6 @@ public class AuthController {
     @Autowired
     private AuthenticationManager manager;
 
-
     @Autowired
     private JwtHelper helper;
 
@@ -35,7 +34,6 @@ public class AuthController {
     public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest request) {
 
         this.doAuthenticate(request.getEmail(), request.getPassword());
-
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
         String token = this.helper.generateToken(userDetails);
